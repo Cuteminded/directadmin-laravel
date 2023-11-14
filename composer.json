@@ -5,7 +5,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Lizzy\\DirectadminLaravel\\": "src/"
+            "lizzy\\directadminlaravel\\": "src/"
         }
     },
     "authors": [
