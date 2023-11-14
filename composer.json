@@ -5,7 +5,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "lizzy\\directadmin-laravel\\": "src/"
+            "Lizzy\\DirectadminLaravel\\": "src/"
         }
     },
     "authors": [
@@ -15,5 +15,7 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {}
+    "require": {
+        "illuminate/support": "^10.31"
+    }
 }
