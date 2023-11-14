@@ -14,5 +14,6 @@
             "email": "info@lizzy.nu"
         }
     ],
+    "minimum-stability": "stable",
     "require": {}
 }
