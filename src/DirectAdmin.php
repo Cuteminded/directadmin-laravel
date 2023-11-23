@@ -4,15 +4,20 @@
 
     use Lizzy\DirectadminLaravel\DirectAdminCLI;
 
-    
-class Directadmin{
-    
+
+class DirectAdmin{
+
+    public static function testConnection()
+    {
+        return config('Directadmin');
+    }
+
     /**
      * The function `AddPointer` adds a pointer domain to a DirectAdmin domain.
-     * 
+     *
      * @param pointer The parameter "pointer" is the domain name or URL that you want to add as a
      * pointer to the main domain.
-     * 
+     *
      * @return the result of the query made to the DirectAdmin API.
      */
     public static function AddPointer($pointer){
@@ -26,10 +31,10 @@ class Directadmin{
 
     /**
      * The function DeletePointer deletes a pointer for a specified domain in DirectAdmin.
-     * 
+     *
      * @param pointer The "pointer" parameter is the domain pointer that you want to delete. It is the
      * alias domain that is associated with the main domain.
-     * 
+     *
      * @return the result of the query made to the DirectAdmin API.
      */
     public static function DeletePointer($pointer){

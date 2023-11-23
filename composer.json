@@ -3,11 +3,6 @@
     "description": "Run DirectAdmin commands through your laravel application",
     "type": "library",
     "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "Lizzy\\DirectadminLaravel\\": "src/"
-        }
-    },
     "authors": [
         {
             "name": "Lizzy",
@@ -17,5 +12,15 @@
     "minimum-stability": "stable",
     "require": {
         "illuminate/support": "^10.31"
+    },
+    "extra": {
+        "laravel": {
+            "providers": ["Lizzy\\DirectadminLaravel\\DirectAdminServiceProvider"]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Lizzy\\DirectadminLaravel\\": "src/"
+        }
     }
 }
