@@ -32,3 +32,43 @@ Publish the config file using the artisan CLI tool:
 ```bash
 php artisan vendor:publish --provider="Lizzy\DirectadminLaravel\DirectAdminServiceProvider"
 ```
+
+.env keys
+
+```.env
+
+DIRECTADMIN_HOST=""
+DIRECTADMIN_DOMAIN=""
+DIRECTADMIN_USERNAME=""
+DIRECTADMIN_PASSWORD=""
+DIRECTADMIN_CACERT="cacert.pem"
+
+```
+## Usage
+
+Test connection
+
+```php
+
+Directadmin::testConnection();
+
+```
+
+User statistics
+
+```php
+
+Directadmin::getStatistics();
+
+```
+
+Domain pointer
+
+```php
+// add pointer
+Directadmin::addPointer('example.com','yes');
+
+//remove pointer
+Directadmin::deletePointer('example.com','yes');
+
+```

@@ -1,47 +1,86 @@
 <?php
 
-    namespace Lizzy\DirectadminLaravel;
+namespace Lizzy\DirectadminLaravel;
 
-    use Lizzy\DirectadminLaravel\DirectAdminCLI;
+use Lizzy\DirectadminLaravel\DirectAdminCLI;
 
 
-class DirectAdmin{
-
+class DirectAdmin
+{
+    /**
+     * domain information using the provided credentials, and returns the result as a JSON object.
+     *
+     * @return the result of the query made to the DirectAdmin CLI. The result is being decoded from
+     * JSON format and returned as an object.
+     */
     public static function testConnection()
     {
-        return config('Directadmin');
-    }
-
-    /**
-     * The function `AddPointer` adds a pointer domain to a DirectAdmin domain.
-     *
-     * @param pointer The parameter "pointer" is the domain name or URL that you want to add as a
-     * pointer to the main domain.
-     *
-     * @return the result of the query made to the DirectAdmin API.
-     */
-    public static function AddPointer($pointer){
-        $DA_Domain = env('DIRECTADMIN_DOMAIN');
-        $DA_Pointer = $pointer;
-        $da = new DirectAdminCLI(env('DIRECTADMIN_HOST',null), env('DIRECTADMIN_USERNAME',null), env('DIRECTADMIN_PASSWORD',null));
-        $result = $da->query("CMD_API_DOMAIN_POINTER?domain=".$DA_Domain,
-            array("domain" => $DA_Domain,"action" => "add","from" => $DA_Pointer,"alias" => "yes"), "POST");
+        $cli = new DirectAdminCLI(config('Directadmin.default.host'), config('Directadmin.default.username'), config('Directadmin.default.password'));
+        $result = json_decode((string)$cli->query("CMD_SHOW_DOMAIN?json=yes&domain=".config('Directadmin.default.domain')));
         return $result;
     }
 
     /**
-     * The function DeletePointer deletes a pointer for a specified domain in DirectAdmin.
+     * returns statistics for a user from a DirectAdmin control panel.
+     */
+    public static function getStatistics()
+    {
+        $cli = new DirectAdminCLI(config('Directadmin.default.host'), config('Directadmin.default.username'), config('Directadmin.default.password'));
+        $result = json_decode((string)$cli->query("CMD_USER_STATS?json=yes&domain=".config('Directadmin.default.domain')));
+        return $result;
+    }
+
+    /**
+     * Adds a pointer domain to a DirectAdmin account.
+     *
+     * @param pointer The "pointer" parameter is the domain or subdomain that you want to add as a
+     * pointer to the main domain. It can be a string representing the domain name or subdomain name.
+     * @param alias The "alias" parameter is an optional parameter that specifies whether the pointer
+     * should be added as an alias or not. If the value of "alias" is set to "yes", the pointer will be
+     * added as an alias. If the value is set to "no" or not provided, the pointer
+     *
+     * @return the result of the query made to the DirectAdmin CLI.
+     */
+    public static function addPointer($pointer, $alias = 'yes')
+    {
+        $cli = new DirectAdminCLI(config('Directadmin.default.host'), config('Directadmin.default.username'), config('Directadmin.default.password'));
+        $result = $cli->query(
+            "CMD_API_DOMAIN_POINTER?domain=" . config('Directadmin.default.domain'),
+            array(
+                "domain" => config('Directadmin.default.domain'),
+                "action" => "add",
+                "from" => $pointer,
+                "alias" => $alias
+            ),
+            "POST"
+        );
+        return $result;
+    }
+
+    /**
+     * Removes a pointer domain to a DirectAdmin account.
      *
      * @param pointer The "pointer" parameter is the domain pointer that you want to delete. It is the
-     * alias domain that is associated with the main domain.
+     * domain that is pointing to another domain or website.
+     * @param alias The "alias" parameter is an optional parameter that specifies whether the pointer
+     * being deleted is an alias or not. By default, it is set to 'yes', which means that the pointer
+     * being deleted is an alias. If you want to delete a non-alias pointer, you can set the "alias
      *
-     * @return the result of the query made to the DirectAdmin API.
+     * @return the result of the query made to the DirectAdmin CLI.
      */
-    public static function DeletePointer($pointer){
-		$DA_Domain = env('DIRECTADMIN_DOMAIN');
-        $da = new DirectAdminCLI(env('DIRECTADMIN_HOST',null), env('DIRECTADMIN_USERNAME',null), env('DIRECTADMIN_PASSWORD',null));
-        $result = $da->query("CMD_API_DOMAIN_POINTER?domain=".$DA_Domain,
-            array("domain" => $DA_Domain,"action" => "delete","select0" => $pointer,"alias" => "yes"), "POST");
+    public static function deletePointer($pointer, $alias = 'yes')
+    {
+        $cli = new DirectAdminCLI(config('Directadmin.default.host'), config('Directadmin.default.username'), config('Directadmin.default.password'));
+        $result = $cli->query(
+            "CMD_API_DOMAIN_POINTER?domain=" . config('Directadmin.default.domain'),
+            array(
+                "domain" => config('Directadmin.default.domain'),
+                "action" => "delete",
+                "select0" => $pointer,
+                "alias" => $alias
+            ),
+            "POST"
+        );
         return $result;
     }
 }
