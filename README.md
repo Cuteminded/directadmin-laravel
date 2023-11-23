@@ -44,6 +44,7 @@ DIRECTADMIN_PASSWORD=""
 DIRECTADMIN_CACERT="cacert.pem"
 
 ```
+
 ## Usage
 
 Test connection
