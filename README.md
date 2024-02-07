@@ -33,43 +33,37 @@ Publish the config file using the artisan CLI tool:
 php artisan vendor:publish --provider="Lizzy\DirectadminLaravel\DirectAdminServiceProvider"
 ```
 
-.env keys
+#####.env keys
 
 ```.env
-
 DIRECTADMIN_HOST=""
 DIRECTADMIN_DOMAIN=""
 DIRECTADMIN_USERNAME=""
 DIRECTADMIN_PASSWORD=""
 DIRECTADMIN_CACERT="cacert.pem"
-
 ```
 
 ## Usage
 
-Test connection
+#####Test connection
 
 ```php
-
 Directadmin::testConnection();
-
 ```
 
-User statistics
+#####User statistics
 
 ```php
-
 Directadmin::getStatistics();
-
 ```
 
-Domain pointer
-
+#####Domain pointer
 ```php
 // add pointer
-Directadmin::addPointer('example.com','yes');
+Directadmin::addPointer('example.com',true);
 
 //remove pointer
-Directadmin::deletePointer('example.com','yes');
-
+Directadmin::deletePointer('example.com',true);
 ```
+- **$pointer** (string): The domain name to be added as a pointer.
+- **$alias** (boolean, optional, default: true): Determines whether the pointer should be treated as an alias or not.

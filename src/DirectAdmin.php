@@ -33,15 +33,15 @@ class DirectAdmin
     /**
      * Adds a pointer domain to a DirectAdmin account.
      *
-     * @param pointer The "pointer" parameter is the domain or subdomain that you want to add as a
-     * pointer to the main domain. It can be a string representing the domain name or subdomain name.
-     * @param alias The "alias" parameter is an optional parameter that specifies whether the pointer
-     * should be added as an alias or not. If the value of "alias" is set to "yes", the pointer will be
-     * added as an alias. If the value is set to "no" or not provided, the pointer
-     *
+     * @param pointer The pointer parameter is the domain pointer that you want to add. It is the
+     * domain that is being pointed to another domain.
+     * @param alias The "alias" parameter is a boolean value that determines whether the pointer being
+     * added as an alias or not. If the value is true, it means the pointer is an alias, and if the
+     * value is false, it means the pointer is not an alias.
+     * 
      * @return the result of the query made to the DirectAdmin CLI.
      */
-    public static function addPointer($pointer, $alias = 'yes')
+    public static function addPointer($pointer, $alias = true)
     {
         $cli = new DirectAdminCLI(config('Directadmin.default.host'), config('Directadmin.default.username'), config('Directadmin.default.password'));
         $result = $cli->query(
@@ -50,25 +50,26 @@ class DirectAdmin
                 "domain" => config('Directadmin.default.domain'),
                 "action" => "add",
                 "from" => $pointer,
-                "alias" => $alias
+                "alias" => ($alias) ? 'yes' : 'no'
             ),
             "POST"
         );
         return $result;
     }
 
+
     /**
-     * Removes a pointer domain to a DirectAdmin account.
-     *
-     * @param pointer The "pointer" parameter is the domain pointer that you want to delete. It is the
-     * domain that is pointing to another domain or website.
-     * @param alias The "alias" parameter is an optional parameter that specifies whether the pointer
-     * being deleted is an alias or not. By default, it is set to 'yes', which means that the pointer
-     * being deleted is an alias. If you want to delete a non-alias pointer, you can set the "alias
-     *
+     * Removes a pointer domain from a DirectAdmin account.
+     * 
+     * @param pointer The pointer parameter is the domain pointer that you want to delete. It is the
+     * domain that is being pointed to another domain.
+     * @param alias The "alias" parameter is a boolean value that determines whether the pointer being
+     * deleted is an alias or not. If the value is true, it means the pointer is an alias, and if the
+     * value is false, it means the pointer is not an alias.
+     * 
      * @return the result of the query made to the DirectAdmin CLI.
      */
-    public static function deletePointer($pointer, $alias = 'yes')
+    public static function deletePointer($pointer, $alias = true)
     {
         $cli = new DirectAdminCLI(config('Directadmin.default.host'), config('Directadmin.default.username'), config('Directadmin.default.password'));
         $result = $cli->query(
@@ -77,7 +78,7 @@ class DirectAdmin
                 "domain" => config('Directadmin.default.domain'),
                 "action" => "delete",
                 "select0" => $pointer,
-                "alias" => $alias
+                "alias" => ($alias) ? 'yes' : 'no'
             ),
             "POST"
         );
