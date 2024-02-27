@@ -51,7 +51,7 @@ Test the connection
 Directadmin::checkConnection();
 ```
 
-current domain Information
+Current domain Information
 
 ```php
 Directadmin::domainInformation();
