@@ -45,25 +45,43 @@ DIRECTADMIN_CACERT="cacert.pem"
 
 ## Usage
 
-Test connection
+Test the connection
 
 ```php
-Directadmin::testConnection();
+Directadmin::checkConnection();
 ```
 
-User statistics
+current domain Information
 
 ```php
-Directadmin::getStatistics();
+Directadmin::domainInformation();
 ```
 
-Domain pointer
-```php
-// add pointer
-Directadmin::addPointer('example.com',true);
+List User statistics
 
-//remove pointer
-Directadmin::deletePointer('example.com',true);
+```php
+Directadmin::UserStatistics();
+```
+
+List email accounts of current domain
+
+```php
+Directadmin::emailInformation();
+```
+
+List system information from a DirectAdmin server
+
+```php
+Directadmin::systemInformation();
+```
+
+Domain pointers
+```php
+// add a new pointer
+Directadmin::createDomainPointer('example.com',true);
+
+//remove a pointer
+Directadmin::removeDomainPointer('example.com',true);
 ```
 - **$pointer** (string): The domain name to be added as a pointer.
 - **$alias** (boolean, optional, default: true): Determines whether the pointer should be treated as an alias or not.

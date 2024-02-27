@@ -7,26 +7,70 @@ use Lizzy\DirectadminLaravel\DirectAdminCLI;
 
 class DirectAdmin
 {
+
     /**
-     * domain information using the provided credentials, and returns the result as a JSON object.
+     * Tests the connection to a DirectAdmin server.
      *
-     * @return the result of the query made to the DirectAdmin CLI. The result is being decoded from
-     * JSON format and returned as an object.
+     * @return bool Returns true if the connection is successful, false otherwise.
      */
-    public static function testConnection()
+    public static function checkConnection()
     {
         $cli = new DirectAdminCLI(config('Directadmin.default.host'), config('Directadmin.default.username'), config('Directadmin.default.password'));
-        $result = json_decode((string)$cli->query("CMD_SHOW_DOMAIN?json=yes&domain=".config('Directadmin.default.domain')));
+        $result = json_decode((string)$cli->query("CMD_USER_STATS?json=yes&domain=".config('Directadmin.default.domain')));
+        return !isset($result->error);
+    }
+
+    /**
+     * Retrieves domain information from a DirectAdmin server.
+     *
+     * The information typically includes details such as domain name, status, associated accounts,
+     * and other relevant data.
+     *
+     * @return object Returns an object containing domain information if successful, or null if there's an error.
+     */
+    public static function domainInformation()
+    {
+        $cli = new DirectAdminCLI(config('Directadmin.default.host'), config('Directadmin.default.username'), config('Directadmin.default.password'));
+        $result = json_decode((string)$cli->query("CMD_ADDITIONAL_DOMAINS?json=yes&domain=".config('Directadmin.default.domain')));
+        return reset($result);
+    }
+
+    /**
+     * Retrieves statistics information for a user from a DirectAdmin server.
+     *
+     * @return object Returns an object containing statistics information if successful, or null if there's an error.
+     */
+    public static function UserStatistics()
+    {
+        $cli = new DirectAdminCLI(config('Directadmin.default.host'), config('Directadmin.default.username'), config('Directadmin.default.password'));
+        $result = json_decode((string)$cli->query("CMD_USER_STATS?json=yes&domain=".config('Directadmin.default.domain')));
         return $result;
     }
 
     /**
-     * returns statistics for a user from a DirectAdmin control panel.
+     * Retrieves email information from a DirectAdmin server.
+     *
+     * @return object Returns an object containing email information if successful, or null if there's an error.
      */
-    public static function getStatistics()
+    public static function emailInformation()
     {
         $cli = new DirectAdminCLI(config('Directadmin.default.host'), config('Directadmin.default.username'), config('Directadmin.default.password'));
-        $result = json_decode((string)$cli->query("CMD_USER_STATS?json=yes&domain=".config('Directadmin.default.domain')));
+        $result = json_decode((string)$cli->query("CMD_EMAIL_POP?json=yes&domain=".config('Directadmin.default.domain')));
+        return $result;
+    }
+
+    /**
+     * Retrieves system information from a DirectAdmin server.
+     *
+     * The information typically includes details such as server specifications, software versions,
+     * resource usage, etc.
+     *
+     * @return object Returns an object containing system information if successful, or null if there's an error.
+     */
+    public static function systemInformation()
+    {
+        $cli = new DirectAdminCLI(config('Directadmin.default.host'), config('Directadmin.default.username'), config('Directadmin.default.password'));
+        $result = json_decode((string)$cli->query("CMD_SYSTEM_INFO?json=yes&domain=".config('Directadmin.default.domain')));
         return $result;
     }
 
@@ -41,7 +85,7 @@ class DirectAdmin
      * 
      * @return the result of the query made to the DirectAdmin CLI.
      */
-    public static function addPointer($pointer, $alias = true)
+    public static function createDomainPointer($pointer, $alias = true)
     {
         $cli = new DirectAdminCLI(config('Directadmin.default.host'), config('Directadmin.default.username'), config('Directadmin.default.password'));
         $result = $cli->query(
@@ -69,7 +113,7 @@ class DirectAdmin
      * 
      * @return the result of the query made to the DirectAdmin CLI.
      */
-    public static function deletePointer($pointer, $alias = true)
+    public static function removeDomainPointer($pointer, $alias = true)
     {
         $cli = new DirectAdminCLI(config('Directadmin.default.host'), config('Directadmin.default.username'), config('Directadmin.default.password'));
         $result = $cli->query(
