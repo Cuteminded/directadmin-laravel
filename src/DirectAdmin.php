@@ -17,7 +17,7 @@ class DirectAdmin
     {
         $cli = new DirectAdminCLI(config('Directadmin.default.host'), config('Directadmin.default.username'), config('Directadmin.default.password'));
         $result = json_decode((string)$cli->query("CMD_USER_STATS?json=yes&domain=".config('Directadmin.default.domain')));
-        return !isset($result->error);
+        return (($result != null) and (!isset($result->error)));
     }
 
     /**
@@ -32,7 +32,11 @@ class DirectAdmin
     {
         $cli = new DirectAdminCLI(config('Directadmin.default.host'), config('Directadmin.default.username'), config('Directadmin.default.password'));
         $result = json_decode((string)$cli->query("CMD_ADDITIONAL_DOMAINS?json=yes&domain=".config('Directadmin.default.domain')));
-        return reset($result);
+        try {
+            return reset($result);
+        } catch (\Throwable $th) {
+            return null;
+        }
     }
 
     /**
