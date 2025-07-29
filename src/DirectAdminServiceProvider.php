@@ -1,6 +1,6 @@
 <?php
 
-namespace Lizzy\DirectadminLaravel;
+namespace cuteminded\DirectadminLaravel;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;

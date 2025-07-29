@@ -1,5 +1,5 @@
 {
-    "name": "lizzy/directadmin-laravel",
+    "name": "cuteminded/directadmin-laravel",
     "description": "Run DirectAdmin commands through your laravel application",
     "type": "library",
     "license": "MIT",
@@ -15,12 +15,12 @@
     },
     "extra": {
         "laravel": {
-            "providers": ["Lizzy\\DirectadminLaravel\\DirectAdminServiceProvider"]
+            "providers": ["cuteminded\\DirectadminLaravel\\DirectAdminServiceProvider"]
         }
     },
     "autoload": {
         "psr-4": {
-            "Lizzy\\DirectadminLaravel\\": "src/"
+            "cuteminded\\DirectadminLaravel\\": "src/"
         }
     }
 }

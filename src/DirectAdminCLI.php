@@ -1,6 +1,6 @@
 <?php
 
-namespace Lizzy\DirectadminLaravel;
+namespace cuteminded\DirectadminLaravel;
 
 class DirectAdminCLI
 {

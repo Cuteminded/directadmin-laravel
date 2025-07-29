@@ -1,8 +1,8 @@
 <?php
 
-namespace Lizzy\DirectadminLaravel;
+namespace cuteminded\DirectadminLaravel;
 
-use Lizzy\DirectadminLaravel\DirectAdminCLI;
+use cuteminded\DirectadminLaravel\DirectAdminCLI;
 
 
 class DirectAdmin
