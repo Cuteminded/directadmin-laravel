@@ -6,7 +6,7 @@
 You can install the package via composer:
 
 ```bash
-composer require lizzy/directadmin-laravel
+composer require cuteminded/directadmin-laravel
 ```
 
 Add the Service Provider and Facade to your ```app.php``` config file if you're not using Package Discovery.
@@ -16,13 +16,13 @@ Add the Service Provider and Facade to your ```app.php``` config file if you're 
 
 'providers' => [
     ...
-    Lizzy\DirectadminLaravel\DirectAdminServiceProvider::class,
+    cuteminded\DirectadminLaravel\DirectAdminServiceProvider::class,
     ...
 ];
 
 'aliases' => [
     ...
-    'DirectAdmin' => Lizzy\DirectadminLaravel\DirectAdmin::class,
+    'DirectAdmin' => cuteminded\DirectadminLaravel\DirectAdmin::class,
     ...
 ];
 ```
@@ -30,7 +30,7 @@ Add the Service Provider and Facade to your ```app.php``` config file if you're 
 Publish the config file using the artisan CLI tool:
 
 ```bash
-php artisan vendor:publish --provider="Lizzy\DirectadminLaravel\DirectAdminServiceProvider"
+php artisan vendor:publish --provider="cuteminded\DirectadminLaravel\DirectAdminServiceProvider"
 ```
 
 .env keys
